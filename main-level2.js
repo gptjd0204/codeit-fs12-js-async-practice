@@ -29,6 +29,10 @@ const todoInputEl = document.getElementById("todo-input");
 // - 토글 버튼 텍스트: completed면 "완료됨", 아니면 "미완료"
 // ============================================
 
+// ============================================
+//           LEVEL 2 : 완료
+// ============================================
+
 function renderTodos(todos) {
   todoListEl.innerHTML = "";
 
