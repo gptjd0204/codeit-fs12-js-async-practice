@@ -49,27 +49,19 @@ function renderTodos(todos) {
 // ============================================
 
 // 할 일 목록 불러오기
-async function getTodos() {
-
-}
+async function getTodos() {}
 
 // 새 할 일 추가하기
 // 완료 후 getTodos()를 호출해서 화면을 갱신하세요.
-async function addTodo(title) {
-
-}
+async function addTodo(title) {}
 
 // 할 일 완료 토글하기
 // 완료 후 getTodos()를 호출해서 화면을 갱신하세요.
-async function toggleTodo(id, completed) {
-
-}
+async function toggleTodo(id, completed) {}
 
 // 할 일 삭제하기
 // 완료 후 getTodos()를 호출해서 화면을 갱신하세요.
-async function deleteTodo(id) {
-
-}
+async function deleteTodo(id) {}
 
 // ============================================
 // 이벤트 연결 (이미 완성됨 — 수정할 필요 없음)

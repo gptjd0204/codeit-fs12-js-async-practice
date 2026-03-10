@@ -29,20 +29,100 @@ const todoInputEl = document.getElementById("todo-input");
 // - 토글 버튼 텍스트: completed면 "완료됨", 아니면 "미완료"
 // ============================================
 
-async function getTodos() {
+function renderTodos(todos) {
+  todoListEl.innerHTML = "";
 
+  todos.forEach((entry) => {
+    const todo = document.createElement("li");
+    const todoTitle = document.createElement("span");
+    const toggleBtn = document.createElement("button");
+    const deleteBtn = document.createElement("button");
+
+    todo.classList.add("todo-item");
+    todoTitle.classList.add("title");
+    toggleBtn.classList.add("btn-toggle");
+    deleteBtn.classList.add("btn-delete");
+
+    todoTitle.textContent = entry.title;
+    deleteBtn.textContent = "삭제";
+
+    // 토글 버튼 completed 상태에 따라 텍스트 변경
+    if (entry.completed) {
+      todo.classList.add("completed");
+      toggleBtn.textContent = "완료됨";
+    } else {
+      toggleBtn.textContent = "미완료";
+    }
+    // 토글 버튼 이벤트 리스너
+    toggleBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      toggleTodo(entry.id, entry.completed);
+    });
+
+    // 삭제 버튼 이벤트 리스너
+    deleteBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      deleteTodo(entry.id);
+    });
+
+    todo.appendChild(todoTitle);
+    todo.appendChild(toggleBtn);
+    todo.appendChild(deleteBtn);
+
+    todoListEl.appendChild(todo);
+  });
+}
+
+async function getTodos() {
+  // 서버에 할 일 목록을 요청
+  const response = await fetch(BASE_URL);
+  const todos = await response.json();
+
+  // 할 일 목록 화면에 출력
+  renderTodos(todos);
 }
 
 async function addTodo(title) {
-
+  // 새로운 할 일 객체 생성
+  const newTodo = {
+    // id : json-server에서 자율적으로 id를 생성해서 부여해줌.
+    title,
+    completed: false,
+  };
+  // DB에 POST로 newTodo 객체 생성 요청
+  const response = await fetch(BASE_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newTodo),
+  });
 }
 
 async function toggleTodo(id, completed) {
+  // completed 상태 변경(토글)
+  const toggle = {
+    completed: !completed,
+  };
 
+  // PATCH로 completed 수정 요청
+  const response = await fetch(`${BASE_URL}/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(toggle),
+  });
 }
 
 async function deleteTodo(id) {
-
+  // DELETE로 DB에 id로 저장된 정보 삭제 요청
+  const response = await fetch(`${BASE_URL}/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 }
 
 // ============================================
