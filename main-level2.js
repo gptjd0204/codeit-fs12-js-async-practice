@@ -101,6 +101,8 @@ async function addTodo(title) {
     },
     body: JSON.stringify(newTodo),
   });
+
+  getTodos();
 }
 
 async function toggleTodo(id, completed) {
@@ -117,6 +119,8 @@ async function toggleTodo(id, completed) {
     },
     body: JSON.stringify(toggle),
   });
+
+  getTodos();
 }
 
 async function deleteTodo(id) {
@@ -127,6 +131,8 @@ async function deleteTodo(id) {
       "Content-Type": "application/json",
     },
   });
+
+  getTodos();
 }
 
 // ============================================
